@@ -5,4 +5,17 @@ local.properties
 *.apk
 *.keystore
 
+# Gradle files
+.gradle/
+
+
+# IntelliJ/Android Studio
+.idea/
+.idea/*
+*.iml
+
+
+# ProGuard
+proguard/
+
 
