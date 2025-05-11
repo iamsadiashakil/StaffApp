@@ -1,6 +1,9 @@
 *.iml
 .gradle
+build/
+local.properties
 /local.properties
+/.idea
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -13,3 +16,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Log files
+*.log
+
+# Android
+*.apk
+*.keystore
+
+# ProGuard
+proguard/
+
+
