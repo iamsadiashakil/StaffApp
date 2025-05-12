@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <!-- App Logo -->
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@drawable/staff_icon"
+        android:contentDescription="App Logo"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Log TextView -->
+    <TextView
+        android:id="@+id/logTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please enter your credentials."
+        android:textColor="@color/black"
+        android:background="@drawable/textview_background"
+        android:padding="12dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Username Input -->
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:background="@drawable/edittext_background"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray" />
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:background="@drawable/edittext_background"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/toolbar_bg_color"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:minHeight="48dp" />
+
+    <!-- Forgot Password -->
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Forgot Password?"
+        android:textColor="@color/toolbar_bg_color"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Create New Account -->
+    <TextView
+        android:id="@+id/create_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Create New Account"
+        android:textColor="@color/toolbar_bg_color"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true" />
+</LinearLayout>

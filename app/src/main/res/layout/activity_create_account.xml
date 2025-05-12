@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- App Logo -->
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@drawable/staff_icon"
+        android:contentDescription="App Logo"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/create_account_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New Account"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Name Input -->
+    <EditText
+        android:id="@+id/name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:background="@drawable/edittext_background"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:background="@drawable/edittext_background"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/password_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:background="@drawable/edittext_background"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Confirm Password Input -->
+    <EditText
+        android:id="@+id/confirm_password_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:background="@drawable/edittext_background"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/toolbar_bg_color"
+        android:text="Register"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:minHeight="48dp" />
+</LinearLayout>

@@ -6,5 +6,13 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="light_gray">#97A0A0</color>
     <color name="white">#FFFFFFFF</color>
+<!--    <color name="toolbar_bg_color">#0C95B4</color>-->
+    <color name="button_color">#DBDBDB</color>
+    <color name="green">#4CAF50</color> <!-- Green for Normal -->
+    <color name="red">#F44336</color> <!-- Red for High -->
+    <color name="gray">#757575</color> <!-- Gray for secondary text -->
+    <color name="toolbar_bg_color">#1ED7DC</color>
+    <color name="primary">#1ED7DC</color>
 </resources>
