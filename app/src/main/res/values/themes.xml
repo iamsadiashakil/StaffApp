@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.StaffApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Base Theme for the App -->
+    <style name="Theme.StaffApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your app's primary theme here -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
+    </style>
+
+    <!-- Transparent Theme -->
+    <style name="Theme.StaffApp.Transparent" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>
