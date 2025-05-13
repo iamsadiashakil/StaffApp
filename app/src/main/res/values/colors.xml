@@ -15,4 +15,5 @@
     <color name="gray">#757575</color> <!-- Gray for secondary text -->
     <color name="toolbar_bg_color">#1ED7DC</color>
     <color name="primary">#1ED7DC</color>
+    <color name="secondary">#018786</color>
 </resources>
