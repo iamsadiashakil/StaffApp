@@ -1,8 +1,11 @@
 package java.com.myhealthteam.staffapp.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
@@ -44,5 +47,39 @@ public class AllergiesHistoryActivity extends Activity {
         // Set adapter
         adapter = new AllergiesHistoryAdapter(this, allergiesHistory);
         recyclerView.setAdapter(adapter);
+
+        // FAB for adding/modifying allergies
+        findViewById(R.id.fab_add_allergy).setOnClickListener(v -> showAddModifyDialog());
+
+    }
+
+    private void showAddModifyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.dialog_add_allergy, null));
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.findViewById(R.id.btn_save_allergy).setOnClickListener(v -> {
+            // Collect data from inputs
+            EditText nameInput = dialog.findViewById(R.id.input_allergy_name);
+            EditText typeInput = dialog.findViewById(R.id.input_allergy_type);
+            EditText severityInput = dialog.findViewById(R.id.input_allergy_severity);
+            EditText reactionInput = dialog.findViewById(R.id.input_allergy_reaction);
+            EditText dateInput = dialog.findViewById(R.id.input_allergy_date);
+
+            String name = nameInput.getText().toString();
+            String type = typeInput.getText().toString();
+            String severity = severityInput.getText().toString();
+            String reaction = reactionInput.getText().toString();
+            String date = dateInput.getText().toString();
+
+            // Update mock data
+            allergiesHistory.add(new Allergy(name, type, severity, reaction, date));
+            adapter.notifyDataSetChanged();
+
+            dialog.dismiss();
+        });
     }
 }

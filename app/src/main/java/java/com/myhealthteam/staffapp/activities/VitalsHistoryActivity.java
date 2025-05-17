@@ -1,8 +1,11 @@
 package java.com.myhealthteam.staffapp.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +50,35 @@ public class VitalsHistoryActivity extends Activity {
 
         adapter = new VitalsHistoryAdapter(this, vitalsHistory);
         recyclerView.setAdapter(adapter);
+
+        // FAB for adding/modifying vitals
+        findViewById(R.id.fab_add_vital).setOnClickListener(v -> showAddModifyDialog());
+    }
+
+    private void showAddModifyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.dialog_add_vital, null));
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.findViewById(R.id.btn_save_vital).setOnClickListener(v -> {
+            // Collect data from inputs
+            EditText readingInput = dialog.findViewById(R.id.input_vital_reading);
+            EditText dateInput = dialog.findViewById(R.id.input_vital_date);
+            EditText statusInput = dialog.findViewById(R.id.input_vital_status);
+
+            String reading = readingInput.getText().toString();
+            String date = dateInput.getText().toString();
+            String status = statusInput.getText().toString();
+
+            // Update mock data
+            vitalsHistory.add(new Vital(reading, date, status));
+            adapter.notifyDataSetChanged();
+
+            dialog.dismiss();
+        });
     }
 
     private void initializeMockData() {
