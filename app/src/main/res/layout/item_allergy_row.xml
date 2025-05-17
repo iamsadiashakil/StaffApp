@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/text_allergy_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Peanuts"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/text_allergy_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Food"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/text_allergy_severity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Severe"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/text_allergy_reaction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Anaphylaxis"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/text_allergy_noted_on"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:text="2025-01-15"
+        android:textSize="14sp" />
+</LinearLayout>
