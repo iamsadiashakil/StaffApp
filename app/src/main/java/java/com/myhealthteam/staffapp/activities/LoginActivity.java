@@ -48,8 +48,8 @@ public class LoginActivity extends Activity {
                     logTextView.setTextColor(ContextCompat.getColor(logTextView.getContext(), R.color.green));
                     Toast.makeText(LoginActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
 
-                    // Navigate to PatientActivity
-                    Intent intent = new Intent(LoginActivity.this, PatientActivity.class);
+                    // Navigate to DoctorDashboardActivity
+                    Intent intent = new Intent(LoginActivity.this, DoctorDashboardActivity.class);
                     startActivity(intent);
                     finish(); // Close LoginActivity
                 } else {

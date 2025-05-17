@@ -1,108 +1,87 @@
 package java.com.myhealthteam.staffapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+import android.widget.ImageView;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.com.myhealthteam.staffapp.R;
-import java.com.myhealthteam.staffapp.utils.ChartUtils;
+import java.com.myhealthteam.staffapp.adapters.PatientsAdapter;
+import java.com.myhealthteam.staffapp.models.Patient;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PatientActivity extends AppCompatActivity {
-
-    private PieChart appointmentStatusChart;
-    private BarChart weeklyVisitsChart;
-    private LineChart monthlyEarningsChart;
-    private TextView tvTotalPatients, tvTodayAppointments, tvTotalEarnings;
-
+public class PatientActivity extends Activity {
+    List<Patient> patientList;
+    PatientsAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
 
-        // Initialize views
-        initializeViews();
+        // Set up back button
+        ImageView backButton = findViewById(R.id.back_button);
+        backButton.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
+        backButton.setOnClickListener(v -> finish());
 
-        // Set up charts
-        setupAppointmentStatusChart();
-        setupWeeklyVisitsChart();
-        setupMonthlyEarningsChart();
+        // Initialize RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.patient_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Set click listeners for cards
-        setupCardClickListeners();
+        // Create mock data
+        patientList = new ArrayList<>();
+        patientList.add(new Patient("John Smith", 35, "Male", "A+", true));
+        patientList.add(new Patient("Emily Davis", 28, "Female", "O-", false));
+        patientList.add(new Patient("Michael Johnson", 42, "Male", "B+", true));
+        patientList.add(new Patient("Sarah Wilson", 31, "Female", "AB+", true));
+        patientList.add(new Patient("Robert Brown", 50, "Male", "O+", false));
 
-        // Load data
-        loadDashboardData();
-    }
 
-    private void initializeViews() {
-        appointmentStatusChart = findViewById(R.id.appointmentStatusChart);
-        weeklyVisitsChart = findViewById(R.id.weeklyVisitsChart);
-        monthlyEarningsChart = findViewById(R.id.monthlyEarningsChart);
+        adapter = new PatientsAdapter(this, patientList, this::viewPatientDetail);
+        recyclerView.setAdapter(adapter);
 
-        tvTotalPatients = findViewById(R.id.tvTotalPatients);
-        tvTodayAppointments = findViewById(R.id.tvTodayAppointments);
-        tvTotalEarnings = findViewById(R.id.tvTotalEarnings);
-    }
+        // Set up search functionality
+        EditText searchPatient = findViewById(R.id.search_view);
+        searchPatient.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-    private void setupAppointmentStatusChart() {
-        // Implementation would use MPAndroidChart to show pie chart of appointment statuses
-        // (Confirmed, Cancelled, Completed, etc.)
-        ChartUtils.setupAppointmentStatusPieChart(appointmentStatusChart, getApplicationContext());
-    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterPatient(s.toString());
+            }
 
-    private void setupWeeklyVisitsChart() {
-        // Bar chart showing patient visits by day of week
-        ChartUtils.setupWeeklyVisitsBarChart(weeklyVisitsChart, getApplicationContext());
-    }
-
-    private void setupMonthlyEarningsChart() {
-        // Line chart showing earnings trend over months
-        ChartUtils.setupMonthlyEarningsLineChart(monthlyEarningsChart, getApplicationContext());
-    }
-
-    private void setupCardClickListeners() {
-        CardView patientsCard = findViewById(R.id.cardPatients);
-        CardView appointmentsCard = findViewById(R.id.cardAppointments);
-        CardView earningsCard = findViewById(R.id.cardEarnings);
-        CardView prescriptionsCard = findViewById(R.id.cardPrescriptions);
-
-        /*patientsCard.setOnClickListener(v -> {
-            startActivity(new Intent(this, PatientsActivity.class));
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
-
-        appointmentsCard.setOnClickListener(v -> {
-            startActivity(new Intent(this, AppointmentsActivity.class));
-        });
-
-        earningsCard.setOnClickListener(v -> {
-            startActivity(new Intent(this, EarningsActivity.class));
-        });
-
-        prescriptionsCard.setOnClickListener(v -> {
-            startActivity(new Intent(this, PrescriptionsActivity.class));
-        });*/
     }
 
-    private void loadDashboardData() {
-        // In a real app, this would fetch data from your backend/API
-        // For demo purposes, we'll use mock data
+    private void filterPatient(String query) {
+        List<Patient> filteredPatients = new ArrayList<>();
+        for (Patient patient : patientList) {
+            if (patient.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredPatients.add(patient);
+            }
+        }
+        adapter.updateList(filteredPatients);
+    }
 
-        // Mock stats
-        tvTotalPatients.setText("142");
-        tvTodayAppointments.setText("8");
-        tvTotalEarnings.setText("$12,850");
-
-        // Load chart data
-        ChartDataLoader.loadAppointmentStatusData(appointmentStatusChart);
-        ChartDataLoader.loadWeeklyVisitsData(weeklyVisitsChart);
-        ChartDataLoader.loadMonthlyEarningsData(monthlyEarningsChart);
+    private void viewPatientDetail(Patient patient) {
+        // Handle to view selected Patient Details
+        // Example: Navigate to PatientDetailsActivity
+        Intent intent = new Intent(PatientActivity.this, PatientDetailActivity.class);
+        intent.putExtra("patient_name", patient.getName());
+        intent.putExtra("patient_age", patient.getAge());
+        intent.putExtra("patient_sex", patient.getSex());
+        intent.putExtra("patient_blood_group", patient.getBloodGroup());
+        startActivity(intent);
     }
 }

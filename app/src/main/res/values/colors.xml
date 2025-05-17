@@ -13,7 +13,7 @@
     <color name="green">#4CAF50</color> <!-- Green for Normal -->
     <color name="red">#F44336</color> <!-- Red for High -->
     <color name="gray">#757575</color> <!-- Gray for secondary text -->
-    <color name="toolbar_bg_color">#1ED7DC</color>
-    <color name="primary">#1ED7DC</color>
-    <color name="secondary">#018786</color>
+    <color name="toolbar_bg_color">#018786</color>
+    <color name="secondary">#1ED7DC</color>
+    <color name="primary">#018786</color>
 </resources>
