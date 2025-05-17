@@ -37,10 +37,70 @@
             android:layout_marginStart="10dp" />
     </LinearLayout>
 
-    <!-- RecyclerView for Vitals History -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_vitals"
+    <!-- Content -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp" />
+        android:orientation="vertical"
+        android:layout_marginTop="56dp"
+        android:padding="6dp">
+
+        <!-- Header Row -->
+        <LinearLayout
+            android:id="@+id/header_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/light_gray"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/header_vital_reading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reading"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/header_vital_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Status"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/header_vital_measured_at"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Measured At"
+                android:textSize="14sp"
+                android:gravity="end"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- RecyclerView for Vitals History -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_vitals"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!-- Floating Action Button for New Vitals -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_vital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/plus_1"
+        app:tint="@color/white"
+        app:backgroundTint="@color/primary" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
