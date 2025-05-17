@@ -30,8 +30,6 @@ public class PatientActivity extends Activity {
         // Set up back button
         ImageView backButton = findViewById(R.id.back_button);
         backButton.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
-        //ContextCompat.getColor(this, R.color.white) ensures compatibility across API levels.
-        //PorterDuff.Mode.SRC_IN is the most common mode to apply a tint color.
         backButton.setOnClickListener(v -> finish());
 
         // Initialize RecyclerView

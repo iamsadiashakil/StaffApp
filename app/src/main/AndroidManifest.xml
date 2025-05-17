@@ -24,6 +24,8 @@
         <activity android:name=".activities.DoctorDashboardActivity" />
         <activity android:name=".activities.PatientActivity" />
         <activity android:name=".activities.PatientDetailActivity" />
+        <activity android:name=".activities.VitalsHistoryActivity" />
+        <activity android:name=".activities.AllergiesHistoryActivity" />
     </application>
 
 </manifest>

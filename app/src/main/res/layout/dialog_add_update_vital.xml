@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/input_vital_reading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Vital Reading"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/input_vital_measured_at"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Measured At (e.g., 2025-05-17 08:00 AM)"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/input_vital_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Status"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btn_save_vital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save" />
+</LinearLayout>

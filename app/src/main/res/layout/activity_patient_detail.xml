@@ -70,105 +70,215 @@
                 android:textColor="#757575"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Vitals History -->
-            <TextView
+            <!-- Blood Pressure Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_blood_pressure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vitals History"
-                android:textSize="18sp"
-                android:textColor="#212121"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
+                app:cardElevation="4dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="16dp">
 
-            <!-- Blood Pressure History -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Blood Pressure History"
-                android:textSize="16sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_blood_pressure"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                    <TextView
+                        android:id="@+id/blood_pressure_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Blood Pressure"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
 
-            <!-- Body Temperature History -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Body Temperature History"
-                android:textSize="16sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
+                    <TextView
+                        android:id="@+id/blood_pressure_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="120/80 mmHg"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_body_temperature"
+            <!-- Body Temperature Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_body_temperature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                app:cardElevation="4dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="16dp">
 
-            <!-- Pulse Rate History -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pulse Rate History"
-                android:textSize="16sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_pulse_rate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                    <TextView
+                        android:id="@+id/body_temperature_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Body Temperature"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
 
-            <!-- Blood Oxygen History -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Blood Oxygen History"
-                android:textSize="16sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
+                    <TextView
+                        android:id="@+id/body_temperature_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="98.6°F"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_blood_oxygen"
+            <!-- Blood Oxygen Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_blood_oxygen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                app:cardElevation="4dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="16dp">
 
-            <!-- Sugar Level History -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sugar Level History"
-                android:textSize="16sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_sugar_level"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                    <TextView
+                        android:id="@+id/blood_oxygen_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Blood Oxygen"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
 
-            <!-- Allergies History -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Allergies History"
-                android:textSize="16sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
+                    <TextView
+                        android:id="@+id/blood_oxygen_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="97%"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_allergies"
+            <!-- Pulse Rate Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_pulse_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
+                app:cardElevation="4dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/pulse_rate_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pulse Rate"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/pulse_rate_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="72 bpm"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Sugar Level Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_sugar_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/sugar_level_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sugar Level"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/sugar_level_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="110 mg/dL"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Last Allergy Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_last_allergy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/last_allergy_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Last Noted Allergy"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/last_allergy_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Peanuts: Severe (Anaphylaxis)"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
