@@ -72,5 +72,13 @@ public class PatientDetailActivity extends Activity {
             Intent allergyIntent = new Intent(this, AllergiesHistoryActivity.class);
             startActivity(allergyIntent);
         });
+
+        // Chat FAB click listener
+        findViewById(R.id.fab_chat).setOnClickListener(v -> {
+            // Navigate to ChatActivity
+            Intent chatIntent = new Intent(PatientDetailActivity.this, ChatActivity.class);
+            chatIntent.putExtra("patient_caretaker", "Mr. X");
+            startActivity(chatIntent);
+        });
     }
 }

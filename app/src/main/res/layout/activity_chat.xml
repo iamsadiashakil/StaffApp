@@ -1,0 +1,84 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/toolbar_bg_color"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back"
+            android:contentDescription="Back Button"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/patient_caretaker_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient Caretaker"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp" />
+    </LinearLayout>
+
+    <!-- RecyclerView for Chat Messages -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:layout_marginBottom="65dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
+    <!-- Input Field and Send Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@color/white"
+        android:layout_gravity="bottom">
+
+        <EditText
+            android:id="@+id/input_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type a message"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/edittext_background"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray" />
+
+        <ImageButton
+            android:id="@+id/send_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_send"
+            android:contentDescription="Send Button"
+            android:backgroundTint="@color/white"
+            android:padding="12dp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

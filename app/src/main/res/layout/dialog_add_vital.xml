@@ -8,7 +8,7 @@
         android:id="@+id/input_vital_reading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Vital Reading (e.g., 120/80 mmHg)"
+        android:hint="Vital Reading"
         android:layout_marginBottom="8dp" />
 
     <EditText
