@@ -1,18 +1,24 @@
 package java.com.myhealthteam.staffapp.models;
 
 public class Patient {
+    private int id;
     private String name;
     private int age;
     private String sex;
     private String bloodGroup;
     private boolean isActive; // True for active, false for inactive
 
-    public Patient(String name, int age, String sex, String bloodGroup, boolean isActive) {
+    public Patient(int id, String name, int age, String sex, String bloodGroup, boolean isActive) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.sex = sex;
         this.bloodGroup = bloodGroup;
         this.isActive = isActive;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

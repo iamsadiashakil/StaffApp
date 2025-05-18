@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.com.myhealthteam.staffapp.R;
 import java.com.myhealthteam.staffapp.adapters.PatientsAdapter;
 import java.com.myhealthteam.staffapp.models.Patient;
+import java.com.myhealthteam.staffapp.utils.MockData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +38,7 @@ public class PatientActivity extends Activity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Create mock data
-        patientList = new ArrayList<>();
-        patientList.add(new Patient("John Smith", 35, "Male", "A+", true));
-        patientList.add(new Patient("Emily Davis", 28, "Female", "O-", false));
-        patientList.add(new Patient("Michael Johnson", 42, "Male", "B+", true));
-        patientList.add(new Patient("Sarah Wilson", 31, "Female", "AB+", true));
-        patientList.add(new Patient("Robert Brown", 50, "Male", "O+", false));
+        patientList = MockData.getPatients();
 
 
         adapter = new PatientsAdapter(this, patientList, this::viewPatientDetail);
@@ -78,10 +74,7 @@ public class PatientActivity extends Activity {
         // Handle to view selected Patient Details
         // Example: Navigate to PatientDetailsActivity
         Intent intent = new Intent(PatientActivity.this, PatientDetailActivity.class);
-        intent.putExtra("patient_name", patient.getName());
-        intent.putExtra("patient_age", patient.getAge());
-        intent.putExtra("patient_sex", patient.getSex());
-        intent.putExtra("patient_blood_group", patient.getBloodGroup());
+        intent.putExtra("patient_id", patient.getId());
         startActivity(intent);
     }
 }
