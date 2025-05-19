@@ -49,7 +49,7 @@ public class LoginActivity extends Activity {
                     Toast.makeText(LoginActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
 
                     // Navigate to DoctorDashboardActivity
-                    Intent intent = new Intent(LoginActivity.this, DoctorDashboardActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                     startActivity(intent);
                     finish(); // Close LoginActivity
                 } else {
