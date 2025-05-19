@@ -27,7 +27,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         });
 
         cardAppointments.setOnClickListener(v -> {
-            // Start appointments activity
+            startActivity(new Intent(this, AppointmentActivity.class));
         });
 
         cardEarnings.setOnClickListener(v -> {

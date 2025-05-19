@@ -1,0 +1,112 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/toolbar_bg_color"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back"
+            android:contentDescription="Back Button"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/top_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appointment Details"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp" />
+    </LinearLayout>
+
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="8dp"
+               android:gravity="center_vertical"
+               android:orientation="horizontal">
+               <!-- Patient Name -->
+               <TextView
+                   android:id="@+id/patient_name"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:text="John Smith"
+                   android:textSize="22sp"
+                   android:textColor="#212121"
+                   android:layout_weight="1"
+                   android:textStyle="bold" />
+
+               <!-- View Patient Details Button -->
+               <ImageView
+                   android:id="@+id/btn_view_patient_details"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:contentDescription="View Patient Details"
+                   android:src="@drawable/about"
+                   android:focusable="true"
+                   android:clickable="true"
+                   app:tint="@color/primary" />
+           </LinearLayout>
+
+            <!-- Notes -->
+            <TextView
+                android:id="@+id/appointment_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Regular checkup for blood pressure."
+                android:textSize="16sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Prescription Input -->
+            <EditText
+                android:id="@+id/edit_prescription"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="Enter prescription here"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Mark as Complete Button -->
+            <Button
+                android:id="@+id/btn_mark_as_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

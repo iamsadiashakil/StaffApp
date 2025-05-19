@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import java.com.myhealthteam.staffapp.R;
+import java.com.myhealthteam.staffapp.models.Patient;
+import java.com.myhealthteam.staffapp.utils.MockData;
 
 public class PatientDetailActivity extends Activity {
 
@@ -31,10 +33,12 @@ public class PatientDetailActivity extends Activity {
 
         // Retrieve patient data passed from intent
         Intent intent = getIntent();
-        patientName.setText(intent.getStringExtra("patient_name"));
-        String patientDetailsText = intent.getIntExtra("patient_age", 0) + " years | " +
-                intent.getStringExtra("patient_sex") + " | " +
-                intent.getStringExtra("patient_blood_group");
+        int id = intent.getIntExtra("patient_id", 0);
+        Patient patient = MockData.getPatientById(id);
+        patientName.setText(patient.getName());
+        String patientDetailsText = patient.getAge() + " years | " +
+                patient.getSex() + " | " +
+                patient.getBloodGroup();
         patientDetails.setText(patientDetailsText);
 
         // Set up card click listeners

@@ -27,6 +27,8 @@
         <activity android:name=".activities.VitalsHistoryActivity" />
         <activity android:name=".activities.AllergiesHistoryActivity" />
         <activity android:name=".activities.ChatActivity" />
+        <activity android:name=".activities.AppointmentActivity" />
+        <activity android:name=".activities.AppointmentDetailsActivity" />
     </application>
 
 </manifest>
