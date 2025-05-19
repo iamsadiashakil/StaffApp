@@ -36,7 +36,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Profile icon click
         findViewById(R.id.profile_icon).setOnClickListener(v -> {
-//            startActivity(new Intent(this, ProfileActivity.class));
+            startActivity(new Intent(this, ProfileActivity.class));
         });
 
 
