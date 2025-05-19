@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -51,7 +50,7 @@
             android:id="@+id/dashboardGrid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:columnCount="2"
+            android:columnCount="1"
             android:rowCount="3"
             android:alignmentMode="alignMargins"
             android:useDefaultMargins="true"
@@ -233,62 +232,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-             <!-- Schedule Card -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardSchedule"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="6dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            app:tint="@color/primary"
-                            android:src="@drawable/schedule"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Schedule"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:gravity="start"
-                        android:maxLines="2"
-                        android:paddingHorizontal="4dp"/>
-
-                    <TextView
-                        android:id="@+id/tvNextAppointment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="10:00 AM"
-                        android:textSize="17sp"
-                        android:textColor="#666"
-                        android:gravity="start"
-                        android:maxLines="2"
-                        android:paddingHorizontal="4dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
         </GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".activities.CreateAccountActivity" />
         <activity android:name=".activities.ForgotPasswordActivity" />
-        <activity android:name=".activities.DoctorDashboardActivity" />
+        <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.PatientActivity" />
         <activity android:name=".activities.PatientDetailActivity" />
         <activity android:name=".activities.VitalsHistoryActivity" />
@@ -29,6 +29,7 @@
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.AppointmentActivity" />
         <activity android:name=".activities.AppointmentDetailsActivity" />
+        <activity android:name=".activities.EarningActivity" />
     </application>
 
 </manifest>
