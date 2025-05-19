@@ -75,6 +75,7 @@ public class AppointmentDetailsActivity extends Activity {
             appointment.setStatus("Completed");
             Toast.makeText(this, "Appointment marked as Completed", Toast.LENGTH_SHORT).show();
             // Update the status in the database or backend if applicable
+            // navigate to Appointments screen
         });
     }
 }

@@ -72,11 +72,10 @@
                     android:id="@+id/profile_picture"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:padding="15dp"
+                    android:padding="11dp"
                     android:src="@drawable/profile"
                     android:contentDescription="Profile Picture"
-                    android:background="@drawable/circle"
-                    android:backgroundTint="@color/primary"
+                    android:background="@drawable/circle_1"
                     app:tint="@color/primary" />
 
                 <LinearLayout

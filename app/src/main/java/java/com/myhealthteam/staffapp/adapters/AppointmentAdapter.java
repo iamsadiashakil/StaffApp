@@ -2,12 +2,15 @@ package java.com.myhealthteam.staffapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.com.myhealthteam.staffapp.R;
@@ -39,6 +42,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Appointment appointment = appointmentList.get(position);
         Patient patient = MockData.getPatientById(appointment.getPatientId());
+        holder.patientImage.setColorFilter(ContextCompat.getColor(context, R.color.primary), PorterDuff.Mode.SRC_IN);
         holder.patientName.setText(patient.getName());
         holder.time.setText(appointment.getTime());
         holder.status.setText(appointment.getStatus());
@@ -58,9 +62,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView patientName, time, status, notes;
+        ImageView patientImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            patientImage = itemView.findViewById(R.id.patient_image);
             patientName = itemView.findViewById(R.id.patient_name);
             time = itemView.findViewById(R.id.appointment_time);
             status = itemView.findViewById(R.id.appointment_status);
