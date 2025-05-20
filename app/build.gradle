@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'java.com.myhealthteam.staffapp'
+    namespace 'com.myhealthteam.staffapp'
     compileSdk 35
 
     defaultConfig {
-        applicationId "java.com.myhealthteam.staffapp"
+        applicationId "com.myhealthteam.staffapp"
         minSdk 24
         targetSdk 35
         versionCode 1
@@ -43,6 +43,7 @@ dependencies {
     implementation libs.androidx.material3
     implementation libs.androidx.appcompat
     implementation libs.material
+    implementation libs.androidx.core
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
@@ -52,5 +53,10 @@ dependencies {
     debugImplementation libs.androidx.ui.test.manifest
     implementation libs.androidx.coordinatorlayout
     implementation libs.mpandroidchart
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+
 
 }
