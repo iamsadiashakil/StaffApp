@@ -18,5 +18,7 @@ local.properties
 
 # ProGuard
 proguard/
-
-
+/.gradle/
+/.idea/
+/.kotlin/
+/build/
