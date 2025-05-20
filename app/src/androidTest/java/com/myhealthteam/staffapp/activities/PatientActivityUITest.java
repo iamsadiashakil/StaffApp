@@ -1,5 +1,8 @@
 package com.myhealthteam.staffapp.activities;
 
+import static org.junit.Assert.assertTrue;
+
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
@@ -29,35 +32,44 @@ public class PatientActivityUITest {
 
     @Test
     public void testSearchFunctionality() {
-        // Simulate typing a query into the search bar
+        // Type a query into the search bar
         Espresso.onView(ViewMatchers.withId(R.id.search_view))
-                .perform(ViewActions.typeText("john"), ViewActions.closeSoftKeyboard());
+                .perform(ViewActions.typeText("John"), ViewActions.closeSoftKeyboard());
 
-        // Check if the RecyclerView is updated with the filtered result
+        // Verify that the filtered patient is displayed
         Espresso.onView(ViewMatchers.withText("John"))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
     @Test
     public void testBackButton() {
-        // Simulate clicking the back button
+        // Launch the activity
+        ActivityScenario<PatientActivity> scenario = ActivityScenario.launch(PatientActivity.class);
+
+        // Click the back button
         Espresso.onView(ViewMatchers.withId(R.id.back_button))
                 .perform(ViewActions.click());
 
-        // Verify that the activity finishes
-        Espresso.onView(ViewMatchers.isRoot())
-                .check((view, noViewFoundException) -> {
-                    // If no exceptions are thrown, the activity has closed
-                });
+        // Assert that the activity is closed
+        scenario.onActivity(activity -> {
+            assertTrue(activity.isFinishing());
+        });
     }
 
     @Test
     public void testPatientItemClick() {
-        // Simulate clicking on a patient item in the RecyclerView
-        Espresso.onView(ViewMatchers.withText("John")) // Assuming "John" is in the mock data
+        // Launch the activity
+        ActivityScenario<PatientActivity> scenario = ActivityScenario.launch(PatientActivity.class);
+
+        // Wait for RecyclerView to load
+        Espresso.onView(ViewMatchers.withId(R.id.patient_recycler_view))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+
+        // Simulate clicking on a patient item with the name "John"
+        Espresso.onView(ViewMatchers.withText("John Smith"))
                 .perform(ViewActions.click());
 
-        // Verify that the PatientDetailActivity is launched
+        // Verify that PatientDetailActivity is launched
         Espresso.onView(ViewMatchers.withText("Patient Details"))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
