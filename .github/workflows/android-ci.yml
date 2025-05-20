@@ -92,21 +92,21 @@ jobs:
           name: staff-app-apk
           path: app/build/outputs/apk/release/*.apk
 
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download APK artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: staff-app-apk
-
-      - name: Deploy to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
-          token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
-          groups: testers
-          file: app/build/outputs/apk/release/app-release.apk
+#  deploy:
+#    needs: build
+#    if: github.ref == 'refs/heads/master'
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Download APK artifact
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: staff-app-apk
+#
+#      - name: Deploy to Firebase App Distribution
+#        uses: wzieba/Firebase-Distribution-Github-Action@v1
+#        with:
+#          appId: ${{ secrets.FIREBASE_APP_ID }}
+#          token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+#          groups: testers
+#          file: app/build/outputs/apk/release/app-release.apk
