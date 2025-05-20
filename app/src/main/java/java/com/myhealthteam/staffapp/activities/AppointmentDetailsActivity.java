@@ -74,6 +74,8 @@ public class AppointmentDetailsActivity extends Activity {
                     Toast.makeText(this, "Appointment marked as Completed", Toast.LENGTH_SHORT).show();
                     // Update the appointment in the database or backend if applicable
                     Intent intent = new Intent(AppointmentDetailsActivity.this, AppointmentActivity.class);
+                    // Clear the back stack and start ProfileActivity as a new task
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish(); // Close AppointmentDetailsActivity
                 }

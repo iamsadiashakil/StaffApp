@@ -42,6 +42,8 @@ public class CreateAccountActivity extends Activity {
 
             // Navigate to LoginActivity
             Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+            // Clear the back stack and start ProfileActivity as a new task
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish(); // Close CreateAccountActivity
         });

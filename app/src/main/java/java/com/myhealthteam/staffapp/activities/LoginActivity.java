@@ -50,6 +50,8 @@ public class LoginActivity extends Activity {
 
                     // Navigate to DoctorDashboardActivity
                     Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                    // Clear the back stack and start ProfileActivity as a new task
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish(); // Close LoginActivity
                 } else {

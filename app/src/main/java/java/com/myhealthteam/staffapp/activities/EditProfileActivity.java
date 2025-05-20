@@ -65,6 +65,8 @@ public class EditProfileActivity extends Activity {
             // Save updated profile logic (e.g., API call to update profile)
             Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+            // Clear the back stack and start ProfileActivity as a new task
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish(); // Close EditProfileActivity
         });
