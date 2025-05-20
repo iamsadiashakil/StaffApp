@@ -58,4 +58,8 @@ public class Appointment {
     public String getPrescription() {
         return prescription;
     }
+
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
+    }
 }

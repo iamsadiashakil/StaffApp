@@ -62,20 +62,34 @@ public class AppointmentDetailsActivity extends Activity {
         });
         btnViewPatientDetails.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
 
-        // Mark appointment as complete button click listener
-        btnMarkAsComplete.setOnClickListener(v -> {
-            String prescription = editPrescription.getText().toString().trim();
-            if (prescription.isEmpty()) {
-                Toast.makeText(this, "Please enter a prescription", Toast.LENGTH_SHORT).show();
-            } else {
-                // Save prescription (you can replace this with actual save functionality)
-                editPrescription.setText(""); // Clear the input field
-            }
+        if(!appointment.getStatus().equals("Completed")) {// Mark appointment as complete button click listener
+            btnMarkAsComplete.setOnClickListener(v -> {
+                String prescription = editPrescription.getText().toString().trim();
+                if (prescription.isEmpty()) {
+                    Toast.makeText(this, "Please enter a prescription", Toast.LENGTH_SHORT).show();
+                } else {
+                    appointment.setPrescription(prescription);
+                    editPrescription.setText(""); // Clear the input field
+                    appointment.setStatus("Completed");
+                    Toast.makeText(this, "Appointment marked as Completed", Toast.LENGTH_SHORT).show();
+                    // Update the appointment in the database or backend if applicable
+                    Intent intent = new Intent(AppointmentDetailsActivity.this, AppointmentActivity.class);
+                    startActivity(intent);
+                    finish(); // Close AppointmentDetailsActivity
+                }
+            });
+        } else {
+            // Set button to non-clickable
+            btnMarkAsComplete.setClickable(false);
+            btnMarkAsComplete.setEnabled(false); // Disable the button visually as well
 
-            appointment.setStatus("Completed");
-            Toast.makeText(this, "Appointment marked as Completed", Toast.LENGTH_SHORT).show();
-            // Update the status in the database or backend if applicable
-            // navigate to Appointments screen
-        });
+            // Set EditText to non-editable
+            editPrescription.setFocusable(false);
+            editPrescription.setFocusableInTouchMode(false);
+            editPrescription.setClickable(false);
+
+            // Set prescription text
+            editPrescription.setText(appointment.getPrescription());
+        }
     }
 }

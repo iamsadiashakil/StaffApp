@@ -92,7 +92,8 @@
             <EditText
                 android:id="@+id/edit_prescription"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:minHeight="350dp"
                 android:hint="Enter prescription here"
                 android:background="@drawable/edittext_background"
                 android:padding="12dp"
