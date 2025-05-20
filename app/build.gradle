@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id 'jacoco' // Apply the JaCoCo plugin
 }
 
 android {
@@ -22,17 +23,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose true
     }
 }
 
 dependencies {
-
     implementation libs.androidx.core.ktx
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.activity.compose
@@ -54,4 +56,26 @@ dependencies {
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation platform(libs.androidx.compose.bom)
     androidTestImplementation libs.androidx.ui.test.junit4
+}
+
+// Configure JaCoCo
+jacoco {
+    toolVersion = "0.8.10" // Use the latest JaCoCo version
+}
+
+tasks.register('jacocoTestReport', JacocoReport) {
+    dependsOn 'testDebugUnitTest' // Ensure tests run before generating the report
+
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+
+    sourceDirectories.setFrom(files(android.sourceSets.main.java.srcDirs))
+    classDirectories.setFrom(files(android.sourceSets.main.output.classesDirs))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 }
