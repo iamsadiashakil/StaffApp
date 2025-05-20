@@ -11,7 +11,7 @@
         android:id="@+id/app_logo"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:src="@drawable/staff_icon"
+        android:src="@drawable/staff_res"
         android:contentDescription="App Logo"
         android:layout_marginBottom="16dp" />
 

@@ -27,6 +27,7 @@ public class ForgotPasswordActivity extends Activity {
                 Toast.makeText(this, "Password reset link sent to " + email, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Please enter your email address", Toast.LENGTH_SHORT).show();
+                return;
             }
             // Navigate to LoginActivity
             Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
