@@ -72,10 +72,20 @@ tasks.register('jacocoTestReport', JacocoReport) {
         csv.required = false
     }
 
+    // Correct handling of source and class directories for Android
+    def javaClasses = fileTree(
+            dir: "$buildDir/intermediates/javac/debug/classes", // Path to compiled Java classes
+            excludes: ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*']
+    )
+
     sourceDirectories.setFrom(files(android.sourceSets.main.java.srcDirs))
-    classDirectories.setFrom(files(android.sourceSets.main.output.classesDirs))
-    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ]))
+    classDirectories.setFrom(javaClasses)
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: ["jacoco/testDebugUnitTest.exec"]))
+
+    // Only include valid files
+    doFirst {
+        classDirectories.setFrom(classDirectories.files.filter { file ->
+            file.exists()
+        })
+    }
 }
