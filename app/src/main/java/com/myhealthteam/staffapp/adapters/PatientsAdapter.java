@@ -20,7 +20,7 @@ public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.Patien
 
     private final Context context;
     private List<Patient> patientList;
-    private final OnPatientClickListener listener;
+    protected final OnPatientClickListener listener;
 
     public interface OnPatientClickListener {
         void onPatientClick(Patient patient);

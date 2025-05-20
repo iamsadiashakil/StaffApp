@@ -63,7 +63,7 @@ public class PatientActivity extends Activity {
         });
     }
 
-    private void filterPatient(String query) {
+    protected void filterPatient(String query) {
         List<Patient> filteredPatients = new ArrayList<>();
         for (Patient patient : patientList) {
             if (patient.getName().toLowerCase().contains(query.toLowerCase())) {
@@ -73,7 +73,7 @@ public class PatientActivity extends Activity {
         adapter.updateList(filteredPatients);
     }
 
-    private void viewPatientDetail(Patient patient) {
+    protected void viewPatientDetail(Patient patient) {
         // Handle to view selected Patient Details
         // Example: Navigate to PatientDetailsActivity
         Intent intent = new Intent(PatientActivity.this, PatientDetailActivity.class);
