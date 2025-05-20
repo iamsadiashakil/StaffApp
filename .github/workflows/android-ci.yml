@@ -53,7 +53,7 @@ jobs:
 
       - name: Upload APK
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3 # Updated version
         with:
           name: staff-app-apk
           path: app/build/outputs/apk/**/*.apk
