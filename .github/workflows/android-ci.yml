@@ -1,4 +1,4 @@
-name: Staff App CI
+name: Staff App CI/CD
 
 on:
   push:
@@ -50,49 +50,64 @@ jobs:
           build-tools: ${{ matrix.api-level }}.0.0
           ndk: 24.0.8215888
 
-#      # Start an Android Emulator
-#      - name: Start Emulator
-#        run: |
-#          echo "Setting up Android Emulator..."
-#          avdmanager create avd -n test -k "system-images;android-${{ matrix.api-level }};google_apis;x86_64" --force || echo "AVD already exists"
-#          emulator -avd test -no-skin -no-audio -no-window -gpu off &
-#          adb wait-for-device
-#          adb shell input keyevent 82
+      #      # Start an Android Emulator
+      #      - name: Start Emulator
+      #        run: |
+      #          echo "Setting up Android Emulator..."
+      #          avdmanager create avd -n test -k "system-images;android-${{ matrix.api-level }};google_apis;x86_64" --force || echo "AVD already exists"
+      #          emulator -avd test -no-skin -no-audio -no-window -gpu off &
+      #          adb wait-for-device
+      #          adb shell input keyevent 82
 
-      # Build the app
-      - name: Build Staff App with Gradle
-        run: ./gradlew build
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
 
-      # Run unit tests
-      - name: Run Unit Tests for Staff App
-        run: ./gradlew test
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-#      # Run Android instrumentation tests
-#      - name: Run Instrumentation Tests for Staff App
-#        run: ./gradlew connectedAndroidTest
+      - name: Build and Test
+        run: ./gradlew build test
 
-      # Run lint checks
-      - name: Run Lint Checks for Staff App
-        run: ./gradlew lint
-
-      # Test Coverage: Generate JaCoCo report
-      - name: Generate JaCoCo Test Coverage Report
-        run: ./gradlew jacocoTestReport
-
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - name: Run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          files: build/reports/jacoco/test/jacocoTestReport.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
+          api-level: 35  # Matches your compileSdk
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          script: ./gradlew connectedCheck
 
-      # Static Code Analysis with Checkstyle
-      - name: Run Checkstyle
-        run: ./gradlew checkstyle
+      - name: Run Compose tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          script: ./gradlew testDebugComposeTest
 
-      # Deployment: Upload APK to Firebase App Distribution
-      - name: Deploy APK to Firebase App Distribution
-        env:
-          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
-        run: |
-          ./gradlew assembleRelease
-          ./gradlew appDistributionUploadRelease
+      - name: Upload APK artifact
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-apk
+          path: app/build/outputs/apk/**/*.apk
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download APK artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: app-apk
+
+      - name: Deploy to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+          groups: testers
+          file: app/build/outputs/apk/release/app-release.apk
