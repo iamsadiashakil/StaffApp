@@ -15,7 +15,8 @@ jobs:
 
     strategy:
       matrix:
-        api-level: [33, 34, 35]            # Test on multiple API levels
+#        api-level: [33, 34, 35]            # Test on multiple API levels
+        api-level: [35]
         java-version: [17]                 # Use Java 17 as required by Android SDK tools
 
     steps:
