@@ -13,17 +13,22 @@ jobs:
     name: Build and Test Staff App
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        api-level: [33, 34, 35]            # Test on multiple API levels
+        java-version: [17]                 # Use Java 17 as required by Android SDK tools
+
     steps:
       # Checkout the code from the repository
       - name: Checkout Staff App Code
         uses: actions/checkout@v3
 
-      # Set up JDK 11 (to match your project's Java version)
+      # Set up JDK 17
       - name: Set up JDK for Staff App
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu' # Use 'zulu' or 'adopt' as per your preference
-          java-version: '11'   # Matches the Java version specified in your Gradle file
+          distribution: 'zulu' # Or 'adopt' if preferred
+          java-version: ${{ matrix.java-version }}
 
       # Cache Gradle dependencies to speed up builds
       - name: Cache Gradle Dependencies
@@ -32,16 +37,16 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ matrix.java-version }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-${{ matrix.java-version }}-
 
       # Set up Android SDK
       - name: Set up Android SDK for Staff App
         uses: android-actions/setup-android@v2
         with:
-          api-level: 35                      # Matches your compileSdk and targetSdk
-          build-tools: 35.0.0                # Ensure this matches the SDK version used
+          api-level: ${{ matrix.api-level }}  # Use API level from the matrix
+          build-tools: ${{ matrix.api-level }}.0.0
           ndk: 24.0.8215888
 
       # Build the app
@@ -59,3 +64,25 @@ jobs:
       # Run lint checks
       - name: Run Lint Checks for Staff App
         run: ./gradlew lint
+
+      # Test Coverage: Generate JaCoCo report
+      - name: Generate JaCoCo Test Coverage Report
+        run: ./gradlew jacocoTestReport
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      # Static Code Analysis with Checkstyle
+      - name: Run Checkstyle
+        run: ./gradlew checkstyle
+
+      # Deployment: Upload APK to Firebase App Distribution
+      - name: Deploy APK to Firebase App Distribution
+        env:
+          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+        run: |
+          ./gradlew assembleRelease
+          ./gradlew appDistributionUploadRelease
