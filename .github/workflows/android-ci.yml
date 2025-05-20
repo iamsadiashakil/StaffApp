@@ -2,111 +2,74 @@ name: Staff App CI/CD
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
   build:
-    name: Build and Test Staff App
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-#        api-level: [33, 34, 35]            # Test on multiple API levels
         api-level: [35]
-        java-version: [17]                 # Use Java 17 as required by Android SDK tools
+        java-version: [17]
 
     steps:
-      # Checkout the code from the repository
-      - name: Checkout Staff App Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # Set up JDK 17
-      - name: Set up JDK for Staff App
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu' # Or 'adopt' if preferred
+          distribution: 'zulu'
           java-version: ${{ matrix.java-version }}
 
-      # Cache Gradle dependencies to speed up builds
-      - name: Cache Gradle Dependencies
+      - name: Cache Gradle
         uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ matrix.java-version }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-${{ matrix.java-version }}-
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
 
-      # Set up Android SDK
-      - name: Set up Android SDK for Staff App
+      - name: Setup Android
         uses: android-actions/setup-android@v2
         with:
-          api-level: ${{ matrix.api-level }}  # Use API level from the matrix
-          build-tools: ${{ matrix.api-level }}.0.0
-          ndk: 24.0.8215888
-
-      #      # Start an Android Emulator
-      #      - name: Start Emulator
-      #        run: |
-      #          echo "Setting up Android Emulator..."
-      #          avdmanager create avd -n test -k "system-images;android-${{ matrix.api-level }};google_apis;x86_64" --force || echo "AVD already exists"
-      #          emulator -avd test -no-skin -no-audio -no-window -gpu off &
-      #          adb wait-for-device
-      #          adb shell input keyevent 82
+          api-level: ${{ matrix.api-level }}
+          build-tools: '34.0.0'
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
       - name: Build and Test
-        run: ./gradlew build test
+        run: |
+          chmod +x gradlew
+          ./gradlew build test
 
-      - name: Run instrumentation tests
+      - name: Run Tests on Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35  # Matches your compileSdk
-          target: google_apis
-          arch: x86_64
-          profile: pixel_5
+          api-level: ${{ matrix.api-level }}
           script: ./gradlew connectedCheck
 
-      - name: Run Compose tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          target: google_apis
-          arch: x86_64
-          profile: pixel_5
-          script: ./gradlew testDebugComposeTest
-
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload APK
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v2
         with:
           name: staff-app-apk
-          path: app/build/outputs/apk/release/*.apk
+          path: app/build/outputs/apk/**/*.apk
 
-#  deploy:
-#    needs: build
-#    if: github.ref == 'refs/heads/master'
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Download APK artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: staff-app-apk
-#
-#      - name: Deploy to Firebase App Distribution
-#        uses: wzieba/Firebase-Distribution-Github-Action@v1
-#        with:
-#          appId: ${{ secrets.FIREBASE_APP_ID }}
-#          token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
-#          groups: testers
-#          file: app/build/outputs/apk/release/app-release.apk
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: staff-app-apk
+
+      - name: Deploy to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+          file: app/build/outputs/apk/release/*.apk
