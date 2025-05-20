@@ -8,36 +8,36 @@
         android:id="@+id/input_allergy_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Allergy Name (e.g., Peanuts)"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:hint="Allergy Name (e.g., Peanuts)" />
 
     <EditText
         android:id="@+id/input_allergy_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Type (e.g., Food, Drug)"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:hint="Type (e.g., Food, Drug)" />
 
     <EditText
         android:id="@+id/input_allergy_severity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Severity (e.g., Severe)"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:hint="Severity (e.g., Severe)" />
 
     <EditText
         android:id="@+id/input_allergy_reaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Reaction (e.g., Anaphylaxis)"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:hint="Reaction (e.g., Anaphylaxis)" />
 
     <EditText
         android:id="@+id/input_allergy_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Noted On (e.g., 2025-05-17)"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:hint="Noted On (e.g., 2025-05-17)" />
 
     <Button
         android:id="@+id/btn_save_allergy"

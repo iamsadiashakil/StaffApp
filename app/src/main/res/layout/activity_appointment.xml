@@ -1,5 +1,4 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@color/toolbar_bg_color"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
@@ -20,29 +19,29 @@
             android:id="@+id/back_button"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/back"
-            android:contentDescription="Back Button"
             android:clickable="true"
+            android:contentDescription="Back Button"
             android:focusable="true"
+            android:src="@drawable/back"
             app:tint="@color/white" />
 
         <TextView
             android:id="@+id/top_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="Appointments"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="10dp" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- RecyclerView for Appointments -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_appointments"
-        android:layout_marginTop="56dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"/>
+        android:layout_marginTop="56dp"
+        android:padding="16dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

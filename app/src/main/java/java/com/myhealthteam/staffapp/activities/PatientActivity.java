@@ -23,6 +23,7 @@ import java.util.List;
 public class PatientActivity extends Activity {
     List<Patient> patientList;
     PatientsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,8 @@ public class PatientActivity extends Activity {
         EditText searchPatient = findViewById(R.id.search_view);
         searchPatient.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -56,7 +58,8 @@ public class PatientActivity extends Activity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 

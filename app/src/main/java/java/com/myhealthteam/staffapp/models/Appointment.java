@@ -17,7 +17,7 @@ public class Appointment {
         this.notes = notes;
     }
 
-    public Appointment(int id, int patientId,  String time, String status, String notes, String date, String prescription) {
+    public Appointment(int id, int patientId, String time, String status, String notes, String date, String prescription) {
         this.id = id;
         this.patientId = patientId;
         this.time = time;

@@ -17,21 +17,21 @@
             android:id="@+id/back_button"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/back"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:contentDescription="Back Button"
             android:clickable="true"
+            android:contentDescription="Back Button"
             android:focusable="true"
+            android:src="@drawable/back"
             app:tint="@color/white" />
 
         <TextView
             android:id="@+id/top_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/back_button"
-            android:layout_centerVertical="true"
             android:text="Edit Profile"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -55,10 +55,10 @@
                 android:id="@+id/profile_picture"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:background="@drawable/circle_1"
+                android:contentDescription="Profile Picture"
                 android:padding="20dp"
                 android:src="@drawable/profile"
-                android:contentDescription="Profile Picture"
-                android:background="@drawable/circle_1"
                 app:tint="@color/primary" />
 
             <TextView
@@ -76,9 +76,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                android:layout_marginTop="16dp">
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,40 +92,40 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:background="@drawable/edittext_background"
                         android:hint="Enter your name"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
                         android:minHeight="48dp"
                         android:paddingHorizontal="12dp"
-                        android:background="@drawable/edittext_background" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
 
                     <EditText
                         android:id="@+id/edit_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your email"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:minHeight="48dp"
                         android:layout_marginTop="16dp"
-                        android:paddingHorizontal="12dp"
                         android:background="@drawable/edittext_background"
-                        android:inputType="textEmailAddress" />
+                        android:hint="Enter your email"
+                        android:inputType="textEmailAddress"
+                        android:minHeight="48dp"
+                        android:paddingHorizontal="12dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
 
                     <EditText
                         android:id="@+id/edit_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your phone number"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:minHeight="48dp"
                         android:layout_marginTop="16dp"
-                        android:paddingHorizontal="12dp"
                         android:background="@drawable/edittext_background"
-                        android:inputType="phone" />
+                        android:hint="Enter your phone number"
+                        android:inputType="phone"
+                        android:minHeight="48dp"
+                        android:paddingHorizontal="12dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -136,8 +136,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Save Changes"
                 android:backgroundTint="@color/primary"
+                android:text="Save Changes"
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>

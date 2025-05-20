@@ -62,7 +62,7 @@ public class AppointmentDetailsActivity extends Activity {
         });
         btnViewPatientDetails.setColorFilter(ContextCompat.getColor(this, R.color.primary), PorterDuff.Mode.SRC_IN);
 
-        if(!appointment.getStatus().equals("Completed")) {// Mark appointment as complete button click listener
+        if (!appointment.getStatus().equals("Completed")) {// Mark appointment as complete button click listener
             btnMarkAsComplete.setOnClickListener(v -> {
                 String prescription = editPrescription.getText().toString().trim();
                 if (prescription.isEmpty()) {

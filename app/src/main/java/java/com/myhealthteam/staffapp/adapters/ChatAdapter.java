@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.com.myhealthteam.staffapp.R;
 import java.com.myhealthteam.staffapp.models.Message;
-
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

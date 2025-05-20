@@ -2,42 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center">
+    android:padding="16dp">
 
     <!-- App Logo -->
     <ImageView
         android:id="@+id/app_logo"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:src="@drawable/staff_icon"
+        android:layout_marginBottom="16dp"
         android:contentDescription="App Logo"
-        android:layout_marginBottom="16dp" />
+        android:src="@drawable/staff_icon" />
 
     <!-- Log TextView -->
     <TextView
         android:id="@+id/logTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/textview_background"
+        android:gravity="center"
+        android:padding="12dp"
         android:text="Please enter your credentials."
         android:textColor="@color/black"
-        android:background="@drawable/textview_background"
-        android:padding="12dp"
-        android:gravity="center"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+        android:textStyle="bold" />
 
     <!-- Username Input -->
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/edittext_background"
         android:hint="Username"
         android:inputType="text"
         android:minHeight="48dp"
-        android:background="@drawable/edittext_background"
         android:paddingHorizontal="12dp"
         android:textColor="@color/black"
         android:textColorHint="@color/gray" />
@@ -48,10 +48,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_background"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:background="@drawable/edittext_background"
         android:paddingHorizontal="12dp"
         android:textColor="@color/black"
         android:textColorHint="@color/gray" />
@@ -63,38 +63,38 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/toolbar_bg_color"
+        android:minHeight="48dp"
         android:text="Login"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:minHeight="48dp" />
+        android:textStyle="bold" />
 
     <!-- Forgot Password -->
     <TextView
         android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
         android:text="Forgot Password?"
         android:textColor="@color/toolbar_bg_color"
-        android:textStyle="bold"
         android:textSize="14sp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true" />
+        android:textStyle="bold" />
 
     <!-- Create New Account -->
     <TextView
         android:id="@+id/create_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
         android:text="Create New Account"
         android:textColor="@color/toolbar_bg_color"
-        android:textStyle="bold"
         android:textSize="14sp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true" />
+        android:textStyle="bold" />
 </LinearLayout>

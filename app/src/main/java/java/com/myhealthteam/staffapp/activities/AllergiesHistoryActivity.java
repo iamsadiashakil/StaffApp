@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.com.myhealthteam.staffapp.R;
 import java.com.myhealthteam.staffapp.adapters.AllergiesHistoryAdapter;
 import java.com.myhealthteam.staffapp.models.Allergy;
-
 import java.util.ArrayList;
 import java.util.List;
 

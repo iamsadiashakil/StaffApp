@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.com.myhealthteam.staffapp.R;
 import java.com.myhealthteam.staffapp.activities.AppointmentDetailsActivity;
 import java.com.myhealthteam.staffapp.models.Appointment;
-
 import java.com.myhealthteam.staffapp.models.Patient;
 import java.com.myhealthteam.staffapp.utils.MockData;
 import java.util.List;
