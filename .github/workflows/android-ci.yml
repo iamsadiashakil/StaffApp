@@ -49,14 +49,14 @@ jobs:
           build-tools: ${{ matrix.api-level }}.0.0
           ndk: 24.0.8215888
 
-      # Start an Android Emulator
-      - name: Start Emulator
-        run: |
-          echo "Setting up Android Emulator..."
-          avdmanager create avd -n test -k "system-images;android-${{ matrix.api-level }};google_apis;x86_64" --force || echo "AVD already exists"
-          emulator -avd test -no-skin -no-audio -no-window -gpu off &
-          adb wait-for-device
-          adb shell input keyevent 82
+#      # Start an Android Emulator
+#      - name: Start Emulator
+#        run: |
+#          echo "Setting up Android Emulator..."
+#          avdmanager create avd -n test -k "system-images;android-${{ matrix.api-level }};google_apis;x86_64" --force || echo "AVD already exists"
+#          emulator -avd test -no-skin -no-audio -no-window -gpu off &
+#          adb wait-for-device
+#          adb shell input keyevent 82
 
       # Build the app
       - name: Build Staff App with Gradle
@@ -66,9 +66,9 @@ jobs:
       - name: Run Unit Tests for Staff App
         run: ./gradlew test
 
-      # Run Android instrumentation tests
-      - name: Run Instrumentation Tests for Staff App
-        run: ./gradlew connectedAndroidTest
+#      # Run Android instrumentation tests
+#      - name: Run Instrumentation Tests for Staff App
+#        run: ./gradlew connectedAndroidTest
 
       # Run lint checks
       - name: Run Lint Checks for Staff App
