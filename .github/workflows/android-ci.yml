@@ -14,6 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug workspace
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -24,7 +29,11 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install SDK API Level 35
-        run: yes | sdkmanager "platforms;android-35" "build-tools;35.0.0"
+        run: |
+          yes | sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Make Gradle Wrapper executable
+        run: chmod +x ./gradlew
 
       - name: Build debug APK
         run: ./gradlew assembleDebug
@@ -42,6 +51,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Debug workspace
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+
+      - name: Download debug APK
+        run: |
+          echo "Debug APK built during build step will be available here."
+          ls -la app/build/outputs/apk/debug/
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+
+      - name: Set Git environment variable
+        run: echo "GIT_DISCOVERY_ACROSS_FILESYSTEM=1" >> $GITHUB_ENV
 
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
