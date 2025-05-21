@@ -2,20 +2,17 @@ name: Android CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
-    env:
-      ANDROID_SDK_ROOT: $HOME/android-sdk
-
     steps:
-      - name: Checkout project
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -24,24 +21,18 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Download Android SDK commandline tools
-        run: |
-          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
-          curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip
-          unzip -q commandlinetools.zip -d "$ANDROID_SDK_ROOT/cmdline-tools/latest"
-          mv "$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/"* "$ANDROID_SDK_ROOT/cmdline-tools/latest/"
-          rm -rf "$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools"
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Accept licenses and install build tools
+      - name: Install SDK API Level 35
         run: |
-          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --licenses
-          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+          yes | sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Add SDK to path
-        run: |
-          echo "$ANDROID_SDK_ROOT/platform-tools" >> $GITHUB_PATH
-          echo "$ANDROID_SDK_ROOT/emulator" >> $GITHUB_PATH
-          echo "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin" >> $GITHUB_PATH
+      - name: Make Gradle Wrapper executable
+        run: chmod +x ./gradlew
 
-      - name: Build Android project
-        run: ./gradlew build
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest
