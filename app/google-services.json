@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970001058931",
+    "project_id": "myhealthteamapps-7dcd5",
+    "storage_bucket": "myhealthteamapps-7dcd5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970001058931:android:7561de7fc5302fef702e06",
+        "android_client_info": {
+          "package_name": "com.myhealthteam.staffapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiir9RvrFSU5AEzO9WND0jqmHrm8cDpnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
