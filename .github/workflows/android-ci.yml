@@ -2,55 +2,46 @@ name: Android CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     env:
-      JAVA_HOME: /opt/hostedtoolcache/jdk/17*/x64
       ANDROID_SDK_ROOT: $HOME/android-sdk
-      GRADLE_USER_HOME: $HOME/.gradle
 
     steps:
-      - name: Checkout code
+      - name: Checkout project
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: 17
 
-      - name: Install Android SDK
+      - name: Download Android SDK commandline tools
         run: |
           mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
-          cd "$ANDROID_SDK_ROOT/cmdline-tools"
-          curl -sSL https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o tools.zip
-          unzip tools.zip -d latest
-          rm tools.zip
-          echo "y" | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
-          $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip
+          unzip -q commandlinetools.zip -d "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+          mv "$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/"* "$ANDROID_SDK_ROOT/cmdline-tools/latest/"
+          rm -rf "$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools"
 
-      - name: Add SDK to PATH
-        run: echo "$ANDROID_SDK_ROOT/platform-tools" >> $GITHUB_PATH
+      - name: Accept licenses and install build tools
+        run: |
+          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --licenses
+          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" "platforms;android-35" "build-tools;35.0.0" "platform-tools"
 
-      - name: Make Gradle executable
-        run: chmod +x ./gradlew
+      - name: Add SDK to path
+        run: |
+          echo "$ANDROID_SDK_ROOT/platform-tools" >> $GITHUB_PATH
+          echo "$ANDROID_SDK_ROOT/emulator" >> $GITHUB_PATH
+          echo "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
-
-      - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest
-
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Build Android project
+        run: ./gradlew build
