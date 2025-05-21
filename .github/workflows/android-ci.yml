@@ -1,22 +1,54 @@
-name: Test Upload Artifact
+name: Android CI
 
 on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  test-upload:
+  build:
+    name: Build & Test Android Project
     runs-on: ubuntu-latest
+
+    env:
+      JAVA_HOME: /opt/hostedtoolcache/jdk/17*/x64
+      ANDROID_SDK_ROOT: $HOME/android-sdk
+      GRADLE_USER_HOME: $HOME/.gradle
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Create Dummy Artifact
-        run: echo "Test artifact" > test-artifact.txt
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          name: test-artifact
-          path: test-artifact.txt
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Install SDK Platform and Build Tools
+        run: |
+          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
