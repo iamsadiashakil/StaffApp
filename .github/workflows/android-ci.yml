@@ -1,4 +1,4 @@
-name: Android CI
+name: Android CI/CD with Version Management
 
 on:
   push:
@@ -14,11 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug workspace
-        run: |
-          echo "Current directory: $(pwd)"
-          ls -la
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -28,9 +23,11 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install SDK API Level 35
+      - name: Install SDK components
         run: |
-          yes | sdkmanager "platforms;android-35" "build-tools;35.0.0"
+          yes | sdkmanager "platforms;android-35"
+          yes | sdkmanager "build-tools;35.0.0"
+          yes | sdkmanager "cmdline-tools;latest"
 
       - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
@@ -41,33 +38,57 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest
 
-      - name: Upload debug APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
 
-  deploy:
+  version-update:
     needs: build
-    if: |
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
 
     steps:
-      - name: Download debug APK artifact
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract current version
+        id: version
+        run: |
+          VERSION_CODE=$(grep versionCode app/build.gradle | awk '{print $2}')
+          VERSION_NAME=$(grep versionName app/build.gradle | awk -F '"' '{print $2}')
+          echo "Current version: $VERSION_NAME ($VERSION_CODE)"
+          echo "NEW_VERSION_CODE=$((VERSION_CODE + 1))" >> $GITHUB_ENV
+          echo "NEW_VERSION_NAME=${VERSION_NAME%.*}.$((VERSION_CODE + 1))" >> $GITHUB_ENV
+          echo "version_code=$((VERSION_CODE + 1))" >> $GITHUB_OUTPUT
+          echo "version_name=${VERSION_NAME%.*}.$((VERSION_CODE + 1))" >> $GITHUB_OUTPUT
+
+      - name: Update version in build.gradle
+        run: |
+          sed -i "s/versionCode $VERSION_CODE/versionCode $NEW_VERSION_CODE/" app/build.gradle
+          sed -i "s/versionName \"$VERSION_NAME\"/versionName \"$NEW_VERSION_NAME\"/" app/build.gradle
+
+      - name: Commit version update
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add app/build.gradle
+          git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE) [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    needs: version-update
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Download APK artifact
         uses: actions/download-artifact@v4
         with:
           name: debug-apk
-          path: app/build/outputs/apk/debug/
-
-      - name: Debug workspace
-        run: |
-          echo "Current directory: $(pwd)"
-          ls -la
-
-      - name: Set Git environment variable
-        run: echo "GIT_DISCOVERY_ACROSS_FILESYSTEM=1" >> $GITHUB_ENV
 
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -76,3 +97,4 @@ jobs:
           token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
           file: app/build/outputs/apk/debug/app-debug.apk
           groups: "vexa.testers.com"
+          releaseNotes: "Version ${{ needs.version-update.outputs.version_name }} (${{ needs.version-update.outputs.version_code }})"
