@@ -75,3 +75,4 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
           file: app/build/outputs/apk/debug/app-debug.apk
+          groups: "vexa.testers.com"
