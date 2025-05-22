@@ -80,15 +80,36 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
-    needs: version-update
+    needs: build
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
 
     steps:
-      - name: Download APK artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: debug-apk
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Increment versionCode and versionName
+        run: |
+          VERSION_CODE=$(grep versionCode app/build.gradle | awk '{print $2}')
+          VERSION_NAME=$(grep versionName app/build.gradle | awk -F '"' '{print $2}')
+          NEW_VERSION_CODE=$((VERSION_CODE + 1))
+          NEW_VERSION_NAME="${VERSION_NAME%.*}.$((VERSION_CODE + 1))"
+          sed -i "s/versionCode $VERSION_CODE/versionCode $NEW_VERSION_CODE/" app/build.gradle
+          sed -i "s/versionName \"$VERSION_NAME\"/versionName \"$NEW_VERSION_NAME\"/" app/build.gradle
+        shell: bash
+
+      - name: Commit version update
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git checkout -b version-bump
+          git add app/build.gradle
+          git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
+          git push origin version-bump
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -97,4 +118,3 @@ jobs:
           token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
           file: app/build/outputs/apk/debug/app-debug.apk
           groups: "vexa.testers.com"
-          releaseNotes: "Version ${{ needs.version-update.outputs.version_name }} (${{ needs.version-update.outputs.version_code }})"
