@@ -11,50 +11,57 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Step 2: Set up JDK 17 for the Android build
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: 17
 
+      # Step 3: Set up Android SDK
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      # Step 4: Install Android SDK components
       - name: Install SDK components
         run: |
           yes | sdkmanager "platforms;android-35"
           yes | sdkmanager "build-tools;35.0.0"
           yes | sdkmanager "cmdline-tools;latest"
 
+      # Step 5: Make Gradle Wrapper executable
       - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
 
+      # Step 6: Build the debug APK
       - name: Build debug APK
         run: ./gradlew assembleDebug
 
+      # Step 7: Run unit tests
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest
 
+      # Step 8: Upload the APK artifact for debugging purposes
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-  deploy:
+  version-update:
     needs: build
-    if: |
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Step 2: Increment versionCode and versionName in build.gradle
       - name: Increment versionCode and versionName
         run: |
           VERSION_CODE=$(grep versionCode app/build.gradle | awk '{print $2}')
@@ -65,6 +72,7 @@ jobs:
           sed -i "s/versionName \"$VERSION_NAME\"/versionName \"$NEW_VERSION_NAME\"/" app/build.gradle
         shell: bash
 
+      # Step 3: Commit and push the version update
       - name: Commit and Push Version Update
         run: |
           git config user.name "GitHub Actions"
@@ -73,19 +81,18 @@ jobs:
           git fetch origin version-bump
           git rebase origin/version-bump || true
           git merge --strategy-option theirs || true
-          git add .
-          git rebase --continue || true
           git add app/build.gradle
           git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)" || echo "No changes to commit"
           git push origin version-bump --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Step 4: Create a pull request for the version bump
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           branch: version-bump
-          base: master  # Ensure the base is set to the target branch
+          base: master
           title: "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
           body: |
             This pull request updates the version to:
@@ -93,12 +100,19 @@ jobs:
             - **Version Name**: $NEW_VERSION_NAME
           labels: version-bump
 
-      - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+  deploy:
+    needs: [build, version-update]
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
 
-      - name: Debug APK Location
-        run: ls -R app/build/outputs/apk/debug
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      # Step 2: Deploy the debug APK to Firebase App Distribution
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -106,3 +120,13 @@ jobs:
           token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
           file: app/build/outputs/apk/debug/app-debug.apk
           groups: "vexa.testers.com"
+
+      # Step 3: Optional - Add a step for release notes
+      - name: Add Release Notes
+        run: |
+          echo "Release notes for version $NEW_VERSION_NAME ($NEW_VERSION_CODE)" > RELEASE_NOTES.txt
+          firebase appdistribution:distribute app/build/outputs/apk/debug/app-debug.apk \
+            --app ${{ secrets.FIREBASE_APP_ID }} \
+            --release-notes-file RELEASE_NOTES.txt
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
