@@ -119,7 +119,11 @@ jobs:
           name: debug-apk
           path: app/build/outputs/apk/debug
 
-      # Step 3: Deploy the debug APK to Firebase App Distribution
+      # Step 3: Install Firebase CLI
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      # Step 4: Deploy the debug APK to Firebase App Distribution
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -128,12 +132,13 @@ jobs:
           file: app/build/outputs/apk/debug/app-debug.apk
           groups: "vexa.testers.com"
 
-      # Step 4: Optional - Add a step for release notes
+      # Step 5: Add Release Notes
       - name: Add Release Notes
         run: |
           echo "Release notes for version $NEW_VERSION_NAME ($NEW_VERSION_CODE)" > RELEASE_NOTES.txt
           firebase appdistribution:distribute app/build/outputs/apk/debug/app-debug.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
             --release-notes-file RELEASE_NOTES.txt
+        shell: bash
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
