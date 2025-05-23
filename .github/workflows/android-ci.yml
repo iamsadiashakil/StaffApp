@@ -72,39 +72,19 @@ jobs:
           sed -i "s/versionName \"$VERSION_NAME\"/versionName \"$NEW_VERSION_NAME\"/" app/build.gradle
         shell: bash
 
-      # Step 3: Commit and push the version update
+      # Step 3: Commit and push the version update directly to master
       - name: Commit and Push Version Update
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git checkout -b version-bump || git checkout version-bump
-          git fetch origin version-bump
-          git rebase origin/version-bump || true
-          git merge --strategy-option theirs || true
           git add app/build.gradle
           git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)" || echo "No changes to commit"
-          git push origin version-bump --force
+          git push origin master --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 4: Create a pull request for the version bump
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: version-bump
-          base: master
-          title: "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
-          body: |
-            This pull request updates the version to:
-            - **Version Code**: $NEW_VERSION_CODE
-            - **Version Name**: $NEW_VERSION_NAME
-          labels: version-bump
-
   deploy:
     needs: [ build, version-update ]
-    if: |
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
 
     steps:
