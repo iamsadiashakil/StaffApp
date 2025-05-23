@@ -93,6 +93,12 @@ jobs:
             - **Version Name**: $NEW_VERSION_NAME
           labels: version-bump
 
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Debug APK Location
+        run: ls -R app/build/outputs/apk/debug
+
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
