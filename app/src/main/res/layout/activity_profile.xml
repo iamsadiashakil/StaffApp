@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/back_button"
-            android:text="Staff Profile"
+            android:text="Profile"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />

@@ -54,6 +54,9 @@ jobs:
 
   version-update:
     needs: build
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
 
     steps:
@@ -85,6 +88,9 @@ jobs:
 
   deploy:
     needs: [ build, version-update ]
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
 
     steps:
