@@ -65,13 +65,15 @@ jobs:
           sed -i "s/versionName \"$VERSION_NAME\"/versionName \"$NEW_VERSION_NAME\"/" app/build.gradle
         shell: bash
 
-      - name: Commit version update
+      - name: Commit and Push Version Update
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git checkout -b version-bump
+          git checkout -b version-bump || git checkout version-bump
+          git fetch origin version-bump
+          git rebase origin/version-bump
           git add app/build.gradle
-          git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
+          git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)" || echo "No changes to commit"
           git push origin version-bump
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
