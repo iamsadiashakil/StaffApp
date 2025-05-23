@@ -85,6 +85,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           branch: version-bump
+          base: master  # Ensure the base is set to the target branch
           title: "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
           body: |
             This pull request updates the version to:
