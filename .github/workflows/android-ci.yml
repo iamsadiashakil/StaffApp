@@ -44,41 +44,6 @@ jobs:
           name: debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-  version-update:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Extract current version
-        id: version
-        run: |
-          VERSION_CODE=$(grep versionCode app/build.gradle | awk '{print $2}')
-          VERSION_NAME=$(grep versionName app/build.gradle | awk -F '"' '{print $2}')
-          echo "Current version: $VERSION_NAME ($VERSION_CODE)"
-          echo "NEW_VERSION_CODE=$((VERSION_CODE + 1))" >> $GITHUB_ENV
-          echo "NEW_VERSION_NAME=${VERSION_NAME%.*}.$((VERSION_CODE + 1))" >> $GITHUB_ENV
-          echo "version_code=$((VERSION_CODE + 1))" >> $GITHUB_OUTPUT
-          echo "version_name=${VERSION_NAME%.*}.$((VERSION_CODE + 1))" >> $GITHUB_OUTPUT
-
-      - name: Update version in build.gradle
-        run: |
-          sed -i "s/versionCode $VERSION_CODE/versionCode $NEW_VERSION_CODE/" app/build.gradle
-          sed -i "s/versionName \"$VERSION_NAME\"/versionName \"$NEW_VERSION_NAME\"/" app/build.gradle
-
-      - name: Commit version update
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add app/build.gradle
-          git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE) [skip ci]"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   deploy:
     needs: build
     if: |
