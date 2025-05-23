@@ -70,20 +70,16 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git checkout -b version-bump || git checkout version-bump
-          git reset --hard
           git fetch origin version-bump
-          git rebase origin/version-bump
-          git add app/build.gradle
-          git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)" || echo "No changes to commit"
-          git push origin version-bump
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Handle Merge Conflicts
-        run: |
+          git rebase origin/version-bump || true
           git merge --strategy-option theirs || true
           git add .
           git rebase --continue || true
+          git add app/build.gradle
+          git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)" || echo "No changes to commit"
+          git push origin version-bump --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
