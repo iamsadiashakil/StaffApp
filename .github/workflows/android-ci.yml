@@ -101,7 +101,7 @@ jobs:
           labels: version-bump
 
   deploy:
-    needs: [build, version-update]
+    needs: [ build, version-update ]
     if: |
       github.event_name == 'push' ||
       (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
@@ -112,7 +112,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Deploy the debug APK to Firebase App Distribution
+      # Step 2: Download APK artifact
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug
+
+      # Step 3: Deploy the debug APK to Firebase App Distribution
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -121,7 +128,7 @@ jobs:
           file: app/build/outputs/apk/debug/app-debug.apk
           groups: "vexa.testers.com"
 
-      # Step 3: Optional - Add a step for release notes
+      # Step 4: Optional - Add a step for release notes
       - name: Add Release Notes
         run: |
           echo "Release notes for version $NEW_VERSION_NAME ($NEW_VERSION_CODE)" > RELEASE_NOTES.txt
