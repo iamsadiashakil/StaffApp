@@ -104,11 +104,23 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+          git checkout -b version-bump
           git add app/build.gradle
           git commit -m "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
-          git push
+          git push origin version-bump
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: version-bump
+          title: "CI: Bump version to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
+          body: |
+            This pull request updates the version to:
+            - **Version Code**: $NEW_VERSION_CODE
+            - **Version Name**: $NEW_VERSION_NAME
+          labels: version-bump
 
       - name: Deploy to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
