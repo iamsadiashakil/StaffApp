@@ -70,6 +70,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git checkout -b version-bump || git checkout version-bump
+          git reset --hard
           git fetch origin version-bump
           git rebase origin/version-bump
           git add app/build.gradle
