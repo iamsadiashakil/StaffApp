@@ -1,4 +1,4 @@
-![chat with doctor](https://github.com/user-attachments/assets/450af2e7-954b-4c64-9366-f8b91151fc62)# StaffApp
+# StaffApp
 
 StaffApp is an Android application designed for health professionals to manage patient vitals, communicate with caretakers, and manage their profile.
 
