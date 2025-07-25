@@ -48,5 +48,4 @@ StaffApp is an Android application designed for health professionals to manage p
 ### Earnings
 <img src="https://github.com/user-attachments/assets/230adbe8-cf44-49bd-89fc-0e8b98a252e1" alt="Earnings Screen" width="250"/>
 
-## License
-[Specify your license here, e.g., MIT License]
+
