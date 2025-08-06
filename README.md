@@ -1,11 +1,11 @@
 # StaffApp
 
-StaffApp is an Android application designed for health professionals to manage patient vitals, communicate with caretakers, and manage their profile.
+StaffApp is an Android application designed for health professionals to manage patient vitals, communicate with patient’s healthcare representative, and manage their profile.
 
 ## Features
 - Login, Create Account, Forgot Password
 - Manage and update patient vitals
-- Communicate with patients' caretakers
+- Communicate with patients' healthcare representative
 - Update health professional profile
 
 ## Requirements
